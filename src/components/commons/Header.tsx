@@ -4,11 +4,12 @@ import LogoIcon from '../../assets/icons/LogoIcon';
 
 const HeaderWrapper = styled.div`
   width: 100%;
-  height: 80px;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 48px 80px;
+  padding: 0px 80px;
+  margin-top: 20px;
 `;
 
 export default function Header() {

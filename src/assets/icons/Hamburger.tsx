@@ -3,7 +3,7 @@ import IconWrapper from './IconWrapper';
 
 export default function Hamburger() {
   return (
-    <IconWrapper isButton={true}>
+    <IconWrapper width="48" height="48" isButton={true}>
       <HiBars3 />
     </IconWrapper>
   );

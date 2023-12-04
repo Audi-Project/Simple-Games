@@ -15,15 +15,15 @@ const IconWrapperContainer = styled.div<IconWrapperProps>`
   }
 
   svg {
-    width: ${(props) => props.width};
-    height: ${(props) => props.height};
+    width: ${(props) => `${props.width}px`};
+    height: ${(props) => `${props.height}px`};
     cursor: ${(props) => (props.isButton ? 'pointer' : 'default')};
   }
 `;
 
 export default function IconWrapper({
-  width = '24px',
-  height = '24px',
+  width = '24',
+  height = '24',
   isButton = false,
   children,
   onClick,
