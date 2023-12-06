@@ -154,6 +154,7 @@ function LeftRightGame() {
 
   useEffect(() => {
     initGame();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -162,6 +163,7 @@ function LeftRightGame() {
     return () => {
       document.removeEventListener('keydown', inputHandler);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentBeats, isGameStart]);
 
   return (
