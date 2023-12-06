@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.tsx';
 import OneToFiftyGame from './games/onetofifty/OneToFiftyGame.tsx';
 import LeftRightGame from './pages/LeftRightGame.tsx';
+import LeftRightGame from './games/left-right/LeftRightGame.tsx';
 import GlobalStyles from './styles/GlobalStyles.tsx';
 
 const router = createBrowserRouter([
