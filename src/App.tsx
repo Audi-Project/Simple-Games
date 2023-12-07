@@ -4,6 +4,7 @@ import DeepBlue from './assets/icons/ramis/DeepBlue';
 import SkyBlue from './assets/icons/ramis/SkyBlue';
 import Yellow from './assets/icons/ramis/Yellow';
 import Header from './components/commons/Header';
+import OverlayProvider from './contexts/OverlayProvider';
 
 const Main = styled.main`
   width: 100%;
@@ -25,7 +26,7 @@ const MainContent = styled.div`
 
 function App() {
   return (
-    <>
+    <OverlayProvider>
       <Header />
       <Main>
         <MainContent>
@@ -35,7 +36,7 @@ function App() {
           <Beige />
         </MainContent>
       </Main>
-    </>
+    </OverlayProvider>
   );
 }
 
