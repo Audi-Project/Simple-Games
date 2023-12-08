@@ -21,6 +21,8 @@ const router = createBrowserRouter([
   {
     path: '/1to50',
     element: <OneToFiftyGame />,
+  },
+  {
     path: '/games/avoid-devil',
     element: <SelectDifficulty />,
   },
