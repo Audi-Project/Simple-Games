@@ -1,6 +1,6 @@
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { MouseEvent, useEffect, useRef, useState } from 'react';
 import { Variables } from '../../variables/Variables';
 
 const MainWrapper = styled.div`
@@ -55,6 +55,20 @@ const opacity = keyframes`
   }
 `;
 
+const zoomOut = keyframes`
+  0% {
+    scale: 1;
+    opacity: 1;
+  }
+  50% {
+    scale: 1.8;
+  }
+  100% {
+    scale: 2;
+    opacity: 0;
+  }
+`;
+
 const NumberButton = styled.button`
   border: none;
   font-size: 18px;
@@ -70,14 +84,14 @@ const NumberButton = styled.button`
   cursor: pointer;
   transition: all 0.6s;
 
-  &.error:active {
-    animation: ${shake} 1s ease-in-out infinite;
-    scale: 0.8;
+  &.error {
+    animation: ${shake} 1s ease-in-out;
   }
 
-  &.success:active {
-    scale: 1.3;
+  &.success {
     opacity: 0;
+    visibility: hidden;
+    animation: ${zoomOut} 1s ease-in-out;
   }
 
   &.hint {
@@ -118,8 +132,10 @@ const LastNumber = styled.span`
 
 const OneToFiftyGame = () => {
   const [numberArr, setNumberArr] = useState<number[]>([]);
-  const [currentNumber] = useState<number>(0);
+  const [currentNumber, setCurrentNumber] = useState<number>(1);
+  const buttonRef = useRef<null[] | HTMLButtonElement[]>([]);
   const LAST_NUMBER = 50;
+  const TIME_OUT = 400;
 
   useEffect(() => {
     const newNumberArr: number[] = [];
@@ -137,10 +153,33 @@ const OneToFiftyGame = () => {
     setNumberArr(newNumberArr);
   }, []);
 
-  console.log(numberArr);
+  useEffect(() => {
+    const currentEl = buttonRef.current?.filter(
+      (el) => Number(el?.id) === currentNumber,
+    );
 
-  const handleClick = (num: number) => {
-    console.log(num);
+    setTimeout(() => {
+      currentEl.forEach((el) => el?.classList.add('hint'));
+    }, 5000);
+
+    console.log(buttonRef);
+  }, [buttonRef, currentNumber]);
+
+  const handleClick = (e: MouseEvent<HTMLButtonElement>, targetNum: number) => {
+    const target = e.currentTarget;
+
+    if (currentNumber === targetNum) {
+      setCurrentNumber((prev) => prev + 1);
+      target.classList.remove('hint');
+      target.classList.add('success');
+    }
+
+    if (currentNumber !== targetNum) {
+      target.classList.add('error');
+      setTimeout(() => {
+        target.classList.remove('error');
+      }, TIME_OUT);
+    }
   };
 
   return (
@@ -148,14 +187,19 @@ const OneToFiftyGame = () => {
       <GameWrapper>
         <Timer>00:00</Timer>
         <NumbersBoard>
-          {numberArr.map((el) => (
-            <NumberButton className="" key={el} onClick={() => handleClick(el)}>
+          {numberArr.map((el, idx) => (
+            <NumberButton
+              id={String(el)}
+              key={el}
+              onClick={(e) => handleClick(e, el)}
+              ref={(ref) => (buttonRef.current[idx] = ref)}
+            >
               {el}
             </NumberButton>
           ))}
         </NumbersBoard>
         <ScoreCircle>
-          <CurrentScore>{currentNumber}</CurrentScore>
+          <CurrentScore>{currentNumber - 1}</CurrentScore>
           <LastNumber>/ {LAST_NUMBER}</LastNumber>
         </ScoreCircle>
       </GameWrapper>
