@@ -155,12 +155,12 @@ const OneToFiftyGame = () => {
   }, []);
 
   useEffect(() => {
-    const currentEl = buttonRef.current?.filter(
-      (el) => Number(el?.id) === currentNumber,
+    const buttonElement = buttonRef.current?.filter(
+      (buttonItem) => Number(buttonItem?.id) === currentNumber,
     );
 
     const eventHint = () => {
-      currentEl.forEach((el) => el?.classList.add('hint'));
+      buttonElement.forEach((buttonItem) => buttonItem?.classList.add('hint'));
     };
 
     const hintTimer = setTimeout(eventHint, HINT_TIME);
@@ -171,18 +171,18 @@ const OneToFiftyGame = () => {
   }, [buttonRef, currentNumber]);
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>, targetNum: number) => {
-    const target = e.currentTarget;
+    const buttonTarget = e.currentTarget;
 
     if (currentNumber === targetNum) {
-      setCurrentNumber((prev) => prev + 1);
-      target.classList.remove('hint');
-      target.classList.add('success');
+      setCurrentNumber((prevNumber) => prevNumber + 1);
+      buttonTarget.classList.remove('hint');
+      buttonTarget.classList.add('success');
     }
 
     if (currentNumber !== targetNum) {
-      target.classList.add('error');
+      buttonTarget.classList.add('error');
       setTimeout(() => {
-        target.classList.remove('error');
+        buttonTarget.classList.remove('error');
       }, ERROR_REMOVE_TIME);
     }
   };
@@ -192,14 +192,14 @@ const OneToFiftyGame = () => {
       <GameWrapper>
         <Timer>00:00</Timer>
         <NumbersBoard>
-          {numberArr.map((el, idx) => (
+          {numberArr.map((item, idx) => (
             <NumberButton
-              id={String(el)}
-              key={el}
-              onClick={(e) => handleClick(e, el)}
-              ref={(ref) => (buttonRef.current[idx] = ref)}
+              id={String(item)}
+              key={item}
+              onClick={(e) => handleClick(e, item)}
+              ref={(button) => (buttonRef.current[idx] = button)}
             >
-              {el}
+              {item}
             </NumberButton>
           ))}
         </NumbersBoard>
