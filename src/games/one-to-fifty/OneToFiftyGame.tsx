@@ -135,7 +135,8 @@ const OneToFiftyGame = () => {
   const [currentNumber, setCurrentNumber] = useState<number>(1);
   const buttonRef = useRef<null[] | HTMLButtonElement[]>([]);
   const LAST_NUMBER = 50;
-  const TIME_OUT = 400;
+  const HINT_TIME = 5000;
+  const ERROR_REMOVE_TIME = 400;
 
   useEffect(() => {
     const newNumberArr: number[] = [];
@@ -162,7 +163,7 @@ const OneToFiftyGame = () => {
       currentEl.forEach((el) => el?.classList.add('hint'));
     };
 
-    const hintTimer = setTimeout(eventHint, 5000);
+    const hintTimer = setTimeout(eventHint, HINT_TIME);
 
     return () => {
       clearTimeout(hintTimer);
@@ -182,7 +183,7 @@ const OneToFiftyGame = () => {
       target.classList.add('error');
       setTimeout(() => {
         target.classList.remove('error');
-      }, TIME_OUT);
+      }, ERROR_REMOVE_TIME);
     }
   };
 
