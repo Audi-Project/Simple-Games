@@ -19,7 +19,7 @@ const router = createBrowserRouter([
     element: <LeftRightGame />,
   },
   {
-    path: '/1to50',
+    path: '/games/1to50',
     element: <OneToFiftyGame />,
   },
   {
