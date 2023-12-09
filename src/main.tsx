@@ -5,7 +5,7 @@ import App from './App.tsx';
 import AvoidDevil from './games/avoid-devil/pages/AvoidDevil.tsx';
 import SelectDifficulty from './games/avoid-devil/pages/SelectDifficulty.tsx';
 import LeftRightGame from './games/left-right/LeftRightGame.tsx';
-import OneToFiftyGame from './games/onetofifty/OneToFiftyGame.tsx';
+import OneToFiftyGame from './games/one-to-fifty/OneToFiftyGame.tsx';
 import GlobalStyles from './styles/GlobalStyles.tsx';
 
 const router = createBrowserRouter([
