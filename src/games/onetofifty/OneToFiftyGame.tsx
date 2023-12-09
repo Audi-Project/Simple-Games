@@ -158,11 +158,15 @@ const OneToFiftyGame = () => {
       (el) => Number(el?.id) === currentNumber,
     );
 
-    setTimeout(() => {
+    const eventHint = () => {
       currentEl.forEach((el) => el?.classList.add('hint'));
-    }, 5000);
+    };
 
-    console.log(buttonRef);
+    const hintTimer = setTimeout(eventHint, 5000);
+
+    return () => {
+      clearTimeout(hintTimer);
+    };
   }, [buttonRef, currentNumber]);
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>, targetNum: number) => {
