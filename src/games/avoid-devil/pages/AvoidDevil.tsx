@@ -28,9 +28,8 @@ export default function AvoidDevil() {
         direction,
       };
       setDevils((prevDevils) => [...prevDevils, newDevil]);
-    }, 1000); // Adjust the interval as needed
+    }, 1000);
 
-    // Clean up the interval on component unmount
     return () => clearInterval(intervalId);
   }, []);
 
