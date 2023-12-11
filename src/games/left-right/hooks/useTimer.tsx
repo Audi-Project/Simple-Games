@@ -4,16 +4,16 @@ const GAME_TIME = 10000;
 
 export default function useTimer() {
   const [isTimerStart, setIsTimerStart] = useState(false);
-  const [timeText, setTimeText] = useState('');
-  //   const [time, setTime] = useState(GAME_TIME);
-
+  const [timeText, setTimeText] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const currentTime = useRef(0);
 
   const updateTimerText = (time: number) => {
     const ms = time % 1000;
     const second = (time - ms) / 1000;
-    setTimeText(`${second}.${ms}s`);
+    // console.log(ms);
+    setTimeText(time);
+    // return `${second}.${ms}`;
   };
 
   const setCurrentTime = (time: number) => {
@@ -30,7 +30,7 @@ export default function useTimer() {
         return;
       }
       updateTimerText(currentTime.current);
-      setCurrentTime(currentTime.current);
+      console.log(currentTime.current);
     }, 1);
   };
 

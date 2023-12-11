@@ -44,19 +44,7 @@ export default function MenuModal({ open, onClose }: Props) {
         <GameLinkWrapper>
           <Link to="/left-right">왼쪽과 오른쪽</Link>
           <Link to="#">일 부터 오십</Link>
-          <Link to="#">끝말잇기</Link>
-          <Link to="#">가위바위보</Link>
-          <Link to="/left-right">왼쪽과 오른쪽</Link>
-          <Link to="#">일 부터 오십</Link>
-          <Link to="#">끝말잇기</Link>
-          <Link to="#">가위바위보</Link>
-          <Link to="/left-right">왼쪽과 오른쪽</Link>
-          <Link to="#">일 부터 오십</Link>
-          <Link to="#">끝말잇기</Link>
-          <Link to="#">가위바위보</Link>
-          <Link to="/left-right">왼쪽과 오른쪽</Link>
-          <Link to="#">일 부터 오십</Link>
-          <Link to="#">끝말잇기</Link>
+          <Link to="#">악마 피하기</Link>
           <Link to="#">가위바위보</Link>
         </GameLinkWrapper>
         <CloseBtn onClick={onClose}>닫기</CloseBtn>
