@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
+import CloseIcon from '../../assets/icons/CloseIcon';
 
 interface Props {
   open: boolean;
@@ -34,7 +35,12 @@ const GameLinkWrapper = styled.div`
 const CloseBtn = styled.button`
   position: absolute;
   top: 48px;
-  right: 48px;
+  right: 80px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+  color: white;
 `;
 
 export default function MenuModal({ open, onClose }: Props) {
@@ -47,7 +53,9 @@ export default function MenuModal({ open, onClose }: Props) {
           <Link to="#">악마 피하기</Link>
           <Link to="#">가위바위보</Link>
         </GameLinkWrapper>
-        <CloseBtn onClick={onClose}>닫기</CloseBtn>
+        <CloseBtn>
+          <CloseIcon onClose={onClose} />
+        </CloseBtn>
       </MenuModalWrapper>
     )
   );
