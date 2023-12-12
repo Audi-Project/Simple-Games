@@ -87,7 +87,6 @@ const PlayerIcon = styled.img<PlayerIconType>`
   top: ${(props) => props.playerPosition.top}%;
   left: ${(props) => props.playerPosition.left}%;
   transform: translateX(-50%);
-  transition: all 0.2s;
   outline: none;
 `;
 
