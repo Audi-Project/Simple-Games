@@ -15,16 +15,16 @@ export default function AvoidDevil() {
     const keyCode = e.code;
     switch (keyCode) {
       case 'ArrowLeft':
-        setPlayerPosition((prev) => ({ ...prev, left: prev.left - 2 }));
+        setPlayerPosition((prev) => ({ ...prev, left: prev.left - 1 }));
         break;
       case 'ArrowDown':
-        setPlayerPosition((prev) => ({ ...prev, top: prev.top + 2 }));
+        setPlayerPosition((prev) => ({ ...prev, top: prev.top + 1 }));
         break;
       case 'ArrowRight':
-        setPlayerPosition((prev) => ({ ...prev, left: prev.left + 2 }));
+        setPlayerPosition((prev) => ({ ...prev, left: prev.left + 1 }));
         break;
       case 'ArrowUp':
-        setPlayerPosition((prev) => ({ ...prev, top: prev.top - 2 }));
+        setPlayerPosition((prev) => ({ ...prev, top: prev.top - 1 }));
         break;
     }
   };
@@ -87,6 +87,7 @@ const PlayerIcon = styled.img<PlayerIconType>`
   top: ${(props) => props.playerPosition.top}%;
   left: ${(props) => props.playerPosition.left}%;
   transform: translateX(-50%);
+  transition: all 0.2s;
   outline: none;
 `;
 
