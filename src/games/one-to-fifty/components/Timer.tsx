@@ -1,4 +1,4 @@
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 import { Variables } from '../../../variables/Variables';
 
 const TimerWrapper = styled.p`
