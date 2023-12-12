@@ -2,6 +2,7 @@ import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { MouseEvent, useEffect, useRef, useState } from 'react';
 import { Variables } from '../../variables/Variables';
+import Timer from './components/Timer';
 
 const MainWrapper = styled.div`
   width: 100%;
@@ -17,12 +18,6 @@ const GameWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 50px;
-`;
-
-const Timer = styled.p`
-  font-size: 6.25rem;
-  font-weight: bold;
-  color: ${Variables.colors.deepBlue};
 `;
 
 const NumbersBoard = styled.section`
@@ -190,7 +185,7 @@ const OneToFiftyGame = () => {
   return (
     <MainWrapper>
       <GameWrapper>
-        <Timer>00:00</Timer>
+        <Timer />
         <NumbersBoard>
           {numberArr.map((item, idx) => (
             <NumberButton
