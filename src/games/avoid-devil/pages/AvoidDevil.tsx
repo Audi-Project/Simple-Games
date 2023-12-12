@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import playerIcon from '../../../assets/avoid-devil/player-icon.svg';
 import Devil from '../components/Devil';
 
@@ -7,6 +7,31 @@ const getRandomCoordinate = Math.floor(Math.random() * 100);
 
 export default function AvoidDevil() {
   const [devils, setDevils] = useState<NewDevilType[]>([]);
+  const [playerPosition, setPlayerPosition] = useState({ top: 80, left: 50 });
+  const playerIconRef = useRef<HTMLImageElement>(null);
+
+  const movePlayerHandler = (e: React.KeyboardEvent<HTMLImageElement>) => {
+    console.log(e.key);
+    const keyCode = e.code;
+    switch (keyCode) {
+      case 'ArrowLeft':
+        setPlayerPosition((prev) => ({ ...prev, left: prev.left - 1 }));
+        break;
+      case 'ArrowDown':
+        setPlayerPosition((prev) => ({ ...prev, top: prev.top + 1 }));
+        break;
+      case 'ArrowRight':
+        setPlayerPosition((prev) => ({ ...prev, left: prev.left + 1 }));
+        break;
+      case 'ArrowUp':
+        setPlayerPosition((prev) => ({ ...prev, top: prev.top - 1 }));
+        break;
+    }
+  };
+
+  useEffect(() => {
+    playerIconRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -36,7 +61,14 @@ export default function AvoidDevil() {
 
   return (
     <MainWrapper>
-      <img src={playerIcon} alt="player" />
+      <PlayerIcon // keydown 이벤트를 위해 포커싱을 해줘야함.
+        ref={playerIconRef}
+        tabIndex={0}
+        onKeyDown={movePlayerHandler}
+        playerPosition={playerPosition}
+        src={playerIcon}
+        alt="player"
+      />
       {devils.map((devil, idx) => (
         <Devil key={idx} {...devil} />
       ))}
@@ -50,8 +82,24 @@ const MainWrapper = styled.main`
   height: 100vh;
 `;
 
+const PlayerIcon = styled.img<PlayerIconType>`
+  position: absolute;
+  top: ${(props) => props.playerPosition.top}%;
+  left: ${(props) => props.playerPosition.left}%;
+  transform: translateX(-50%);
+  transition: all 0.2s;
+  outline: none;
+`;
+
 interface NewDevilType {
   top: number;
   left: number;
   direction: string;
+}
+
+interface PlayerIconType {
+  playerPosition: {
+    top: number;
+    left: number;
+  };
 }
