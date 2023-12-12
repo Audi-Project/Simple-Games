@@ -30,7 +30,7 @@ const moveAnimation = (direction: string) => keyframes`
   }
 
   to {
-    top: 50%;
+    top: 40%;
     left: 50%;
   }
 `;
