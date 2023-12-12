@@ -11,7 +11,6 @@ export default function AvoidDevil() {
   const playerIconRef = useRef<HTMLImageElement>(null);
 
   const movePlayerHandler = (e: React.KeyboardEvent<HTMLImageElement>) => {
-    console.log(e.key);
     const keyCode = e.code;
     switch (keyCode) {
       case 'ArrowLeft':
@@ -70,7 +69,7 @@ export default function AvoidDevil() {
         alt="player"
       />
       {devils.map((devil, idx) => (
-        <Devil key={idx} {...devil} />
+        <Devil key={idx} playerPosition={playerPosition} {...devil} />
       ))}
     </MainWrapper>
   );
