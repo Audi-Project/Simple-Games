@@ -7,11 +7,11 @@ const getRandomCoordinate = Math.floor(Math.random() * 100);
 
 export default function AvoidDevil() {
   const [devils, setDevils] = useState<NewDevilType[]>([]);
+  const [devilGoals, setDevilGoals] = useState<DevilGoalsType[]>([]);
   const [playerPosition, setPlayerPosition] = useState({ top: 80, left: 50 });
   const playerIconRef = useRef<HTMLImageElement>(null);
 
   const movePlayerHandler = (e: React.KeyboardEvent<HTMLImageElement>) => {
-    console.log(e.key);
     const keyCode = e.code;
     switch (keyCode) {
       case 'ArrowLeft':
@@ -53,11 +53,12 @@ export default function AvoidDevil() {
               : getRandomCoordinate,
         direction,
       };
+      setDevilGoals((prevGoals) => [...prevGoals, { ...playerPosition }]);
       setDevils((prevDevils) => [...prevDevils, newDevil]);
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [playerPosition]);
 
   return (
     <MainWrapper>
@@ -70,7 +71,7 @@ export default function AvoidDevil() {
         alt="player"
       />
       {devils.map((devil, idx) => (
-        <Devil key={idx} {...devil} />
+        <Devil key={idx} playerPosition={devilGoals[idx]} {...devil} />
       ))}
     </MainWrapper>
   );
@@ -101,4 +102,9 @@ interface PlayerIconType {
     top: number;
     left: number;
   };
+}
+
+interface DevilGoalsType {
+  top: number;
+  left: number;
 }
