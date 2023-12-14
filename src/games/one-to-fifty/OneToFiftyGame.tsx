@@ -2,7 +2,9 @@ import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { MouseEvent, useEffect, useRef, useState } from 'react';
 import { Variables } from '../../variables/Variables';
+import GameModal from './components/GameModal';
 import Timer from './components/Timer';
+import useTimer from './hooks/useTimer';
 
 const MainWrapper = styled.div`
   width: 100%;
@@ -133,6 +135,9 @@ const OneToFiftyGame = () => {
   const HINT_TIME = 5000;
   const ERROR_REMOVE_TIME = 400;
 
+  const { isTimerStart, timeText, startTimer, endTimer, minusTime, initTimer } =
+    useTimer();
+
   useEffect(() => {
     const newNumberArr: number[] = [];
 
@@ -165,8 +170,14 @@ const OneToFiftyGame = () => {
     };
   }, [buttonRef, currentNumber]);
 
-  const handleClick = (e: MouseEvent<HTMLButtonElement>, targetNum: number) => {
+  const handleButtonClick = (
+    e: MouseEvent<HTMLButtonElement>,
+    targetNum: number,
+  ) => {
     const buttonTarget = e.currentTarget;
+
+    if (isTimerStart === false && targetNum === 1) startTimer();
+    if (targetNum === 50 && currentNumber === 50) endTimer();
 
     if (currentNumber === targetNum) {
       setCurrentNumber((prevNumber) => prevNumber + 1);
@@ -176,6 +187,7 @@ const OneToFiftyGame = () => {
 
     if (currentNumber !== targetNum) {
       buttonTarget.classList.add('error');
+      minusTime();
       setTimeout(() => {
         buttonTarget.classList.remove('error');
       }, ERROR_REMOVE_TIME);
@@ -184,14 +196,15 @@ const OneToFiftyGame = () => {
 
   return (
     <MainWrapper>
+      <GameModal timeText={timeText} currentNumber={currentNumber} />
       <GameWrapper>
-        <Timer />
+        <Timer timeText={timeText} />
         <NumbersBoard>
           {numberArr.map((item, idx) => (
             <NumberButton
               id={String(item)}
               key={item}
-              onClick={(e) => handleClick(e, item)}
+              onClick={(e) => handleButtonClick(e, item)}
               ref={(button) => (buttonRef.current[idx] = button)}
             >
               {item}
