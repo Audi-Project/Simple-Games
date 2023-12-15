@@ -32,16 +32,23 @@ const moveAnimation = (
   direction: string,
   playerPosition: { top: number; left: number },
 ) => keyframes`
-  from {
+  0% {
     ${direction === 'top' ? 'top: 100%;' : ''}
     ${direction === 'right' ? 'left: -20%;' : ''}
     ${direction === 'bottom' ? 'top: -20%;' : ''}
     ${direction === 'left' ? 'left: 100%;' : ''}
   }
 
-  to {
+  50% {
     top: ${playerPosition.top}%;
     left: ${playerPosition.left}%;
+  }
+
+  100% {
+    ${direction === 'top' ? 'top: 0%;' : ''}
+    ${direction === 'right' ? 'right: -80%;' : ''}
+    ${direction === 'bottom' ? 'bottom: -80%;' : ''}
+    ${direction === 'left' ? 'right: 0%;' : ''}
   }
 `;
 

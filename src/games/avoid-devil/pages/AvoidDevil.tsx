@@ -53,7 +53,11 @@ export default function AvoidDevil() {
               : getRandomCoordinate,
         direction,
       };
+      // const newDevils = devils.slice(1);
+      // const newDevilGoals = devilGoals.slice(1);
+      // setDevilGoals([...newDevilGoals, { ...playerPosition }]);
       setDevilGoals((prevGoals) => [...prevGoals, { ...playerPosition }]);
+      // setDevils([...newDevils, newDevil]);
       setDevils((prevDevils) => [...prevDevils, newDevil]);
     }, 1000);
 
