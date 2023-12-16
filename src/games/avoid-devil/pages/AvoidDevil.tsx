@@ -68,7 +68,7 @@ export default function AvoidDevil() {
     <MainWrapper>
       <PlayerIcon // keydown 이벤트를 위해 포커싱을 해줘야함.
         ref={playerIconRef}
-        tabIndex={0}
+        tabIndex={0} // 처음 들어갔을 때 포커싱을 위한 탭 인덱스
         onKeyDown={movePlayerHandler}
         playerPosition={playerPosition}
         src={playerIcon}
