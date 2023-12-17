@@ -6,6 +6,7 @@ import Devil from '../components/Devil';
 const getRandomCoordinate = Math.floor(Math.random() * 100);
 
 export default function AvoidDevil() {
+  const [isStart, setIsStart] = useState(false);
   const [devils, setDevils] = useState<NewDevilType[]>([]);
   const [devilGoals, setDevilGoals] = useState<DevilGoalsType[]>([]);
   const [playerPosition, setPlayerPosition] = useState({ top: 80, left: 50 });
@@ -31,38 +32,48 @@ export default function AvoidDevil() {
 
   useEffect(() => {
     playerIconRef.current?.focus();
-  }, []);
+  }, [isStart]);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      const direction = ['top', 'right', 'bottom', 'left'][
-        Math.floor(Math.random() * 4)
-      ];
-      const newDevil: NewDevilType = {
-        top:
-          direction === 'bottom'
-            ? -20
-            : direction === 'top'
-              ? 120
-              : getRandomCoordinate,
-        left:
-          direction === 'right'
-            ? -20
-            : direction === 'left'
-              ? 120
-              : getRandomCoordinate,
-        direction,
-      };
-      // const newDevils = devils.slice(1);
-      // const newDevilGoals = devilGoals.slice(1);
-      // setDevilGoals([...newDevilGoals, { ...playerPosition }]);
-      setDevilGoals((prevGoals) => [...prevGoals, { ...playerPosition }]);
-      // setDevils([...newDevils, newDevil]);
-      setDevils((prevDevils) => [...prevDevils, newDevil]);
-    }, 1000);
+    if (isStart) {
+      const intervalId = setInterval(() => {
+        const direction = ['top', 'right', 'bottom', 'left'][
+          Math.floor(Math.random() * 4)
+        ];
+        const newDevil: NewDevilType = {
+          top:
+            direction === 'bottom'
+              ? -20
+              : direction === 'top'
+                ? 120
+                : getRandomCoordinate,
+          left:
+            direction === 'right'
+              ? -20
+              : direction === 'left'
+                ? 120
+                : getRandomCoordinate,
+          direction,
+        };
+        // const newDevils = devils.slice(1);
+        // const newDevilGoals = devilGoals.slice(1);
+        // setDevilGoals([...newDevilGoals, { ...playerPosition }]);
+        setDevilGoals((prevGoals) => [...prevGoals, { ...playerPosition }]);
+        // setDevils([...newDevils, newDevil]);
+        setDevils((prevDevils) => [...prevDevils, newDevil]);
+      }, 1000);
 
-    return () => clearInterval(intervalId);
-  }, [playerPosition]);
+      return () => clearInterval(intervalId);
+    }
+  }, [isStart, playerPosition]);
+
+  if (!isStart) {
+    return (
+      <BeforeStartWrapper>
+        <GameStartBtn onClick={() => setIsStart(true)}>시작하기</GameStartBtn>
+      </BeforeStartWrapper>
+    );
+  }
 
   return (
     <MainWrapper>
@@ -80,6 +91,27 @@ export default function AvoidDevil() {
     </MainWrapper>
   );
 }
+
+const BeforeStartWrapper = styled.main`
+  background-color: #faeece;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const GameStartBtn = styled.button`
+  padding: 10px 15px;
+  font-size: large;
+  border-radius: 10px;
+  background-color: #ff000092;
+  transition: 0.3s;
+  cursor: pointer;
+  &:hover {
+    background-color: #ff00005c;
+  }
+`;
 
 const MainWrapper = styled.main`
   background-color: #faeece;
