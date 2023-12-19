@@ -80,20 +80,17 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-const BlueButton = styled.button`
-  background-color: ${Variables.colors.lightBlue};
-`;
-
 const YellowButton = styled.button`
   background-color: ${Variables.colors.deepYellow};
 `;
 
 interface GameModalPropsT {
   timeText: string;
-  currentNumber: number;
+  score: number;
+  closeModal: () => void;
 }
 
-const GameModal = ({ timeText, currentNumber }: GameModalPropsT) => {
+const GameModal = ({ timeText, score, closeModal }: GameModalPropsT) => {
   return (
     <ModalWrapper>
       <DropBox />
@@ -102,14 +99,13 @@ const GameModal = ({ timeText, currentNumber }: GameModalPropsT) => {
           <span>{timeText ? timeText : '0'}</span>초 만에 달성!
         </CurrentTime>
         <ScoreCircle>
-          <CurrentScore>{currentNumber - 1}</CurrentScore>
+          <CurrentScore>{score - 1}</CurrentScore>
           <LastNumber>/50</LastNumber>
         </ScoreCircle>
       </ScoreWrapper>
 
       <ButtonWrapper>
-        <BlueButton>다시하기</BlueButton>
-        <YellowButton>나가기</YellowButton>
+        <YellowButton onClick={closeModal}>나가기</YellowButton>
       </ButtonWrapper>
     </ModalWrapper>
   );
