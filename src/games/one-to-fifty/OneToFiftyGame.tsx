@@ -129,8 +129,10 @@ const LastNumber = styled.span`
 
 const OneToFiftyGame = () => {
   const [numberArr, setNumberArr] = useState<number[]>([]);
+  const [isGameStart, setIsGameStart] = useState<boolean>(true);
   const [currentNumber, setCurrentNumber] = useState<number>(1);
   const buttonRef = useRef<null[] | HTMLButtonElement[]>([]);
+  const buttonCurrent = buttonRef && buttonRef.current;
   const LAST_NUMBER = 50;
   const HINT_TIME = 5000;
   const ERROR_REMOVE_TIME = 400;
@@ -138,6 +140,7 @@ const OneToFiftyGame = () => {
   const { isTimerStart, timeText, startTimer, endTimer, minusTime, initTimer } =
     useTimer();
 
+  //* 숫자 랜덤으로 표기
   useEffect(() => {
     const newNumberArr: number[] = [];
 
@@ -152,10 +155,17 @@ const OneToFiftyGame = () => {
       }
     }
     setNumberArr(newNumberArr);
-  }, []);
 
+    if (isGameStart) {
+      buttonCurrent.forEach((el) => {
+        el?.classList.remove('success');
+      });
+    }
+  }, [buttonCurrent, isGameStart]);
+
+  //* hint 주기
   useEffect(() => {
-    const buttonElement = buttonRef.current?.filter(
+    const buttonElement = buttonCurrent.filter(
       (buttonItem) => Number(buttonItem?.id) === currentNumber,
     );
 
@@ -168,16 +178,34 @@ const OneToFiftyGame = () => {
     return () => {
       clearTimeout(hintTimer);
     };
-  }, [buttonRef, currentNumber]);
+  }, [buttonCurrent, currentNumber]);
 
+  const resetGame = () => {
+    setIsGameStart(true);
+    initTimer();
+    setCurrentNumber(1);
+  };
+
+  //* 숫자 버튼 클릭 시
   const handleButtonClick = (
     e: MouseEvent<HTMLButtonElement>,
     targetNum: number,
   ) => {
     const buttonTarget = e.currentTarget;
 
-    if (isTimerStart === false && targetNum === 1) startTimer();
-    if (targetNum === 50 && currentNumber === 50) endTimer();
+    if (isTimerStart === false && targetNum === 1) {
+      startTimer();
+    }
+
+    if (targetNum === 3 && currentNumber === 3) {
+      endTimer();
+      setIsGameStart(false);
+    }
+
+    if (targetNum === 50 && currentNumber === 50) {
+      endTimer();
+      setIsGameStart(false);
+    }
 
     if (currentNumber === targetNum) {
       setCurrentNumber((prevNumber) => prevNumber + 1);
@@ -196,7 +224,14 @@ const OneToFiftyGame = () => {
 
   return (
     <MainWrapper>
-      <GameModal timeText={timeText} currentNumber={currentNumber} />
+      {!isGameStart && (
+        <GameModal
+          timeText={timeText}
+          score={currentNumber}
+          closeModal={resetGame}
+        />
+      )}
+
       <GameWrapper>
         <Timer timeText={timeText} />
         <NumbersBoard>
