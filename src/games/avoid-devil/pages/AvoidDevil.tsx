@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useState, useEffect, useRef } from 'react';
 import playerIcon from '../../../assets/avoid-devil/player-icon.svg';
 import Devil from '../components/Devil';
+import StopWatch from '../components/StopWatch';
 
 const getRandomCoordinate = Math.floor(Math.random() * 100);
 
@@ -77,6 +78,7 @@ export default function AvoidDevil() {
 
   return (
     <MainWrapper>
+      <StopWatch isStart={isStart} />
       <PlayerIcon // keydown 이벤트를 위해 포커싱을 해줘야함.
         ref={playerIconRef}
         tabIndex={0} // 처음 들어갔을 때 포커싱을 위한 탭 인덱스

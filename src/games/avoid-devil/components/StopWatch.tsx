@@ -1,13 +1,13 @@
+import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
-export default function StopWatch() {
-  const [isRunning, setIsRunning] = useState(false);
+export default function StopWatch({ isStart }: { isStart: boolean }) {
   const [time, setTime] = useState(0);
 
   useEffect(() => {
     let interval: number;
 
-    if (isRunning) {
+    if (isStart) {
       interval = window.setInterval(() => {
         setTime((prevTime) => prevTime + 10);
       }, 10);
@@ -18,20 +18,20 @@ export default function StopWatch() {
         window.clearInterval(interval);
       }
     };
-  }, [isRunning]);
+  }, [isStart]);
 
-  const startStopwatch = () => {
-    setIsRunning(true);
-  };
+  // const startStopwatch = () => {
+  //   setIsRunning(true);
+  // };
 
-  const stopStopwatch = () => {
-    setIsRunning(false);
-  };
+  // const stopStopwatch = () => {
+  //   setIsRunning(false);
+  // };
 
-  const resetStopwatch = () => {
-    setIsRunning(false);
-    setTime(0);
-  };
+  // const resetStopwatch = () => {
+  //   setIsRunning(false);
+  //   setTime(0);
+  // };
 
   const formatTime = (milliseconds: number) => {
     const totalSeconds = Math.floor(milliseconds / 1000);
@@ -42,16 +42,18 @@ export default function StopWatch() {
     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(
       2,
       '0',
-    )}:${String(millis).padStart(3, '0')}`;
+    )}:${String(millis).padStart(2, '0')}`;
   };
 
   return (
-    <div>
+    <StopWatchWrapper>
       <p>{formatTime(time)}</p>
-      <button onClick={isRunning ? stopStopwatch : startStopwatch}>
-        {isRunning ? 'Stop' : 'Start'}
-      </button>
-      <button onClick={resetStopwatch}>Reset</button>
-    </div>
+    </StopWatchWrapper>
   );
 }
+
+const StopWatchWrapper = styled.section`
+  padding: 30px;
+  font-size: x-large;
+  font-weight: bold;
+`;
