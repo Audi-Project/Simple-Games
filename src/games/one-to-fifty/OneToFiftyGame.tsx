@@ -128,17 +128,24 @@ const LastNumber = styled.span`
 `;
 
 const OneToFiftyGame = () => {
-  const [numberArr, setNumberArr] = useState<number[]>([]);
-  const [isGameStart, setIsGameStart] = useState<boolean>(true);
-  const [currentNumber, setCurrentNumber] = useState<number>(1);
-  const buttonRef = useRef<null[] | HTMLButtonElement[]>([]);
-  const buttonCurrent = buttonRef && buttonRef.current;
   const LAST_NUMBER = 50;
   const HINT_TIME = 5000;
   const ERROR_REMOVE_TIME = 400;
+  const [numberArr, setNumberArr] = useState<number[]>([]);
+  const [isGameStart, setIsGameStart] = useState<boolean>(false);
+  const [currentNumber, setCurrentNumber] = useState<number>(1);
+  const buttonRef = useRef<null[] | HTMLButtonElement[]>([]);
+  const buttonCurrent = buttonRef && buttonRef.current;
 
-  const { isTimerStart, timeText, startTimer, endTimer, minusTime, initTimer } =
-    useTimer();
+  const {
+    isTimerStart,
+    timeText,
+    currentTimeNum,
+    startTimer,
+    endTimer,
+    minusTime,
+    initTimer,
+  } = useTimer();
 
   //* 숫자 랜덤으로 표기
   useEffect(() => {
@@ -149,19 +156,15 @@ const OneToFiftyGame = () => {
       do {
         randomNumber = Math.floor(Math.random() * LAST_NUMBER) + 1;
       } while (newNumberArr.includes(randomNumber));
+
       newNumberArr.push(randomNumber);
+
       if (newNumberArr.length === 50) {
         break;
       }
     }
     setNumberArr(newNumberArr);
-
-    if (isGameStart) {
-      buttonCurrent.forEach((el) => {
-        el?.classList.remove('success');
-      });
-    }
-  }, [buttonCurrent, isGameStart]);
+  }, []);
 
   //* hint 주기
   useEffect(() => {
@@ -180,10 +183,30 @@ const OneToFiftyGame = () => {
     };
   }, [buttonCurrent, currentNumber]);
 
+  const resetNumBtn = () => {
+    if (isGameStart && !isTimerStart) {
+      buttonCurrent.forEach((el) => {
+        el?.classList.remove('success');
+        el?.classList.remove('hint');
+      });
+    }
+  };
+
+  //* 게임 리셋
   const resetGame = () => {
-    setIsGameStart(true);
+    setIsGameStart(false);
     initTimer();
     setCurrentNumber(1);
+    resetNumBtn();
+  };
+
+  const startGame = () => {
+    setIsGameStart(true);
+    startTimer();
+  };
+
+  const endGame = () => {
+    endTimer();
   };
 
   //* 숫자 버튼 클릭 시
@@ -193,29 +216,25 @@ const OneToFiftyGame = () => {
   ) => {
     const buttonTarget = e.currentTarget;
 
-    if (isTimerStart === false && targetNum === 1) {
-      startTimer();
-    }
-
-    if (targetNum === 3 && currentNumber === 3) {
-      endTimer();
-      setIsGameStart(false);
+    if (!isTimerStart && targetNum === 1) {
+      startGame();
     }
 
     if (targetNum === 50 && currentNumber === 50) {
-      endTimer();
-      setIsGameStart(false);
+      endGame();
     }
 
+    //* 동일한 숫자 인 경우
     if (currentNumber === targetNum) {
       setCurrentNumber((prevNumber) => prevNumber + 1);
       buttonTarget.classList.remove('hint');
       buttonTarget.classList.add('success');
     }
 
+    //* 동일한 숫자가 아닌 인 경우
     if (currentNumber !== targetNum) {
+      isTimerStart && minusTime();
       buttonTarget.classList.add('error');
-      minusTime();
       setTimeout(() => {
         buttonTarget.classList.remove('error');
       }, ERROR_REMOVE_TIME);
@@ -224,11 +243,12 @@ const OneToFiftyGame = () => {
 
   return (
     <MainWrapper>
-      {!isGameStart && (
+      {isGameStart && !isTimerStart && (
         <GameModal
           timeText={timeText}
           score={currentNumber}
           closeModal={resetGame}
+          currentTimeNum={currentTimeNum}
         />
       )}
 

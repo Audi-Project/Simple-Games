@@ -9,6 +9,7 @@ export default function useTimer() {
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const currentTime = useRef(0);
+  const currentTimeNum = currentTime.current;
 
   const updateTimerText = (time: number) => {
     const ms = time % 1000;
@@ -54,9 +55,11 @@ export default function useTimer() {
     setCurrentTime(currentTime.current - 800);
     handleTimer(currentTime.current);
   };
+
   return {
     isTimerStart,
     timeText,
+    currentTimeNum,
     startTimer,
     endTimer,
     minusTime,
