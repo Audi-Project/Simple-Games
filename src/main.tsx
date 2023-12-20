@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.tsx';
 import LeftRightGame from './pages/LeftRightGame.tsx';
+import RockPaperScissors from './pages/RockPaperScissors.tsx';
 import GlobalStyles from './styles/GlobalStyles.tsx';
 
 const router = createBrowserRouter([
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
   {
     path: '/left-right',
     element: <LeftRightGame />,
+  },
+  {
+    path: '/rock-paper-scissors',
+    element: <RockPaperScissors />,
   },
 ]);
 
