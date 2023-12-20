@@ -20,19 +20,6 @@ export default function StopWatch({ isStart }: { isStart: boolean }) {
     };
   }, [isStart]);
 
-  // const startStopwatch = () => {
-  //   setIsRunning(true);
-  // };
-
-  // const stopStopwatch = () => {
-  //   setIsRunning(false);
-  // };
-
-  // const resetStopwatch = () => {
-  //   setIsRunning(false);
-  //   setTime(0);
-  // };
-
   const formatTime = (milliseconds: number) => {
     const totalSeconds = Math.floor(milliseconds / 1000);
     const minutes = Math.floor(totalSeconds / 60);
