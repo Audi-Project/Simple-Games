@@ -2,8 +2,7 @@ import styled from '@emotion/styled';
 import { useState, useEffect, useRef } from 'react';
 import playerIcon from '../../../assets/avoid-devil/player-icon.svg';
 import Devil from '../components/Devil';
-
-const getRandomCoordinate = Math.floor(Math.random() * 100);
+import StopWatch from '../components/StopWatch';
 
 export default function AvoidDevil() {
   const [isStart, setIsStart] = useState(false);
@@ -37,24 +36,28 @@ export default function AvoidDevil() {
   useEffect(() => {
     if (isStart) {
       const intervalId = setInterval(() => {
+        const startRandomValue = Math.random();
         const direction = ['top', 'right', 'bottom', 'left'][
           Math.floor(Math.random() * 4)
         ];
-        const newDevil: NewDevilType = {
-          top:
-            direction === 'bottom'
-              ? -20
-              : direction === 'top'
-                ? 120
-                : getRandomCoordinate,
-          left:
-            direction === 'right'
-              ? -20
-              : direction === 'left'
-                ? 120
-                : getRandomCoordinate,
-          direction,
-        };
+        const newDevil: NewDevilType = {};
+        switch (direction) {
+          case 'top':
+            newDevil[direction] = 0;
+            newDevil['left'] = Math.floor(startRandomValue * 101);
+            break;
+          case 'left':
+            newDevil[direction] = 0;
+            newDevil['top'] = Math.floor(startRandomValue * 101);
+            break;
+          case 'right':
+            newDevil['left'] = 100;
+            newDevil['top'] = Math.floor(startRandomValue * 101);
+            break;
+          case 'bottom':
+            newDevil['top'] = 100;
+            newDevil['left'] = Math.floor(startRandomValue * 101);
+        }
         // const newDevils = devils.slice(1);
         // const newDevilGoals = devilGoals.slice(1);
         // setDevilGoals([...newDevilGoals, { ...playerPosition }]);
@@ -77,6 +80,7 @@ export default function AvoidDevil() {
 
   return (
     <MainWrapper>
+      <StopWatch isStart={isStart} />
       <PlayerIcon // keydown 이벤트를 위해 포커싱을 해줘야함.
         ref={playerIconRef}
         tabIndex={0} // 처음 들어갔을 때 포커싱을 위한 탭 인덱스
@@ -128,9 +132,7 @@ const PlayerIcon = styled.img<PlayerIconType>`
 `;
 
 interface NewDevilType {
-  top: number;
-  left: number;
-  direction: string;
+  [key: string]: number | string;
 }
 
 interface PlayerIconType {

@@ -2,21 +2,22 @@ import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import devilIcon from '../../../assets/avoid-devil/Vector.svg';
 
-export default function Devil({
-  top,
-  left,
-  direction,
-  playerPosition,
-}: DevilPropsType) {
+export default function Devil({ top, left, playerPosition }: DevilPropsType) {
   return (
-    <DevilElement
-      top={top}
-      left={left}
-      direction={direction}
-      playerPosition={playerPosition}
-      src={devilIcon}
-      alt="악마"
-    />
+    <>
+      {typeof top === 'number' && typeof left === 'number' ? (
+        <DevilElement
+          top={top}
+          left={left}
+          // direction={direction}
+          playerPosition={playerPosition}
+          src={devilIcon}
+          alt="악마"
+        />
+      ) : (
+        ''
+      )}
+    </>
   );
 }
 
@@ -24,19 +25,22 @@ const DevilElement = styled.img<DevilElementProps>`
   position: absolute;
   top: ${(props) => props.top}%;
   left: ${(props) => props.left}%;
-  animation: ${(props) => moveAnimation(props.direction, props.playerPosition)}
+  animation: ${(props) =>
+      moveAnimation(props.top, props.left, props.playerPosition)}
     4s linear infinite;
 `;
 
 const moveAnimation = (
-  direction: string,
-  playerPosition: { top: number; left: number },
+  top: number,
+  left: number,
+  playerPosition: {
+    top: number;
+    left: number;
+  },
 ) => keyframes`
   0% {
-    ${direction === 'top' ? 'top: 100%;' : ''}
-    ${direction === 'right' ? 'left: -20%;' : ''}
-    ${direction === 'bottom' ? 'top: -20%;' : ''}
-    ${direction === 'left' ? 'left: 100%;' : ''}
+    top: top;
+    left: left;
   }
 
   50% {
@@ -45,17 +49,16 @@ const moveAnimation = (
   }
 
   100% {
-    ${direction === 'top' ? 'top: 0%;' : ''}
-    ${direction === 'right' ? 'right: -80%;' : ''}
-    ${direction === 'bottom' ? 'bottom: -80%;' : ''}
-    ${direction === 'left' ? 'right: 0%;' : ''}
+    top: ${2 * playerPosition.left - left}%;
+    left: ${2 * playerPosition.top - top}%;
   }
 `;
 
 interface DevilPropsType {
-  top: number;
-  left: number;
-  direction: string;
+  top?: number;
+  left?: number;
+  right?: number;
+  bottom?: number;
   playerPosition: {
     top: number;
     left: number;
@@ -65,7 +68,6 @@ interface DevilPropsType {
 interface DevilElementProps {
   top: number;
   left: number;
-  direction: string;
   playerPosition: {
     top: number;
     left: number;
