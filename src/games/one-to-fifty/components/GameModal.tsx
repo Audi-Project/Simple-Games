@@ -29,14 +29,27 @@ const ScoreWrapper = styled.div`
   gap: 10px;
 `;
 
-const CurrentTime = styled.h3`
+const TextBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+`;
+
+const GameInfoTxt = styled.h3`
   font-size: 50px;
   font-weight: bold;
   color: #fff;
+`;
 
-  span {
-    color: ${Variables.colors.deepYellow};
-  }
+const CurrentTime = styled.span`
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  border: 2px solid #fff;
+  padding: 10px 20px 5px;
+  border-radius: 50px;
 `;
 
 const ScoreCircle = styled.div`
@@ -88,16 +101,24 @@ interface GameModalPropsT {
   timeText: string;
   score: number;
   closeModal: () => void;
+  currentTimeNum: number;
 }
-
-const GameModal = ({ timeText, score, closeModal }: GameModalPropsT) => {
+const GameModal = ({
+  timeText,
+  score,
+  closeModal,
+  currentTimeNum,
+}: GameModalPropsT) => {
   return (
     <ModalWrapper>
       <DropBox />
       <ScoreWrapper>
-        <CurrentTime>
-          <span>{timeText ? timeText : '0'}</span>초 만에 달성!
-        </CurrentTime>
+        <TextBox>
+          <CurrentTime>{timeText && `${timeText}s`}</CurrentTime>
+          <GameInfoTxt>
+            {currentTimeNum <= 0 ? ' 아쉽게 실패 :(' : ' 성공 :)'}
+          </GameInfoTxt>
+        </TextBox>
         <ScoreCircle>
           <CurrentScore>{score - 1}</CurrentScore>
           <LastNumber>/50</LastNumber>
