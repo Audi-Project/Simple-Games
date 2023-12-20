@@ -231,7 +231,7 @@ const OneToFiftyGame = () => {
       buttonTarget.classList.add('success');
     }
 
-    //* 동일한 숫자가 아닌 인 경우
+    //* 동일한 숫자가 아닌 경우
     if (currentNumber !== targetNum) {
       isTimerStart && minusTime();
       buttonTarget.classList.add('error');
