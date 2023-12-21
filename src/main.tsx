@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     errorElement: <div>Not Found...!</div>,
   },
   {
-    path: '/left-right',
+    path: '/games/left-right',
     element: <LeftRightGame />,
   },
   {
