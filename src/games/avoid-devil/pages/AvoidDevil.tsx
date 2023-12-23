@@ -9,6 +9,7 @@ export default function AvoidDevil() {
   const [devils, setDevils] = useState<NewDevilType[]>([]);
   const [devilGoals, setDevilGoals] = useState<DevilGoalsType[]>([]);
   const [playerPosition, setPlayerPosition] = useState({ top: 80, left: 50 });
+  // const [playerHealth, setPlayerHealth] = useState(100);
   const playerIconRef = useRef<HTMLImageElement>(null);
 
   const movePlayerHandler = (e: React.KeyboardEvent<HTMLImageElement>) => {
@@ -28,6 +29,14 @@ export default function AvoidDevil() {
         break;
     }
   };
+
+  useEffect(() => {
+    const updatePlayerPosition = () => {
+      requestAnimationFrame(updatePlayerPosition);
+    };
+
+    updatePlayerPosition();
+  }, []);
 
   useEffect(() => {
     playerIconRef.current?.focus();
@@ -129,6 +138,7 @@ const PlayerIcon = styled.img<PlayerIconType>`
   left: ${(props) => props.playerPosition.left}%;
   transform: translateX(-50%);
   outline: none;
+  transition: all 0.2s linear;
 `;
 
 interface NewDevilType {
