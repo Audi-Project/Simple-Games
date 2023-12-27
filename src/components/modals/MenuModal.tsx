@@ -28,6 +28,15 @@ const GameLinkWrapper = styled.div`
     color: white;
     font-size: 48px;
     text-align: center;
+    transition: all 0.3s;
+  }
+
+  &:hover > a:active {
+    transform: scale(0.9);
+  }
+
+  &:hover > a:not(:hover) {
+    opacity: 0.5;
   }
 
   @media (max-width: 768px) {
