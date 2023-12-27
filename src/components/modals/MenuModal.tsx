@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
+import { IoCloseOutline } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
-
 interface Props {
   open: boolean;
   onClose: () => void;
@@ -29,12 +29,29 @@ const GameLinkWrapper = styled.div`
     font-size: 48px;
     text-align: center;
   }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+
+    & > a {
+      font-size: 38px;
+    }
+  }
 `;
 
 const CloseBtn = styled.button`
   position: absolute;
-  top: 48px;
-  right: 48px;
+  top: 40px;
+  right: 73px;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+
+  & > svg {
+    width: 50px;
+    height: 50px;
+    color: #fff;
+  }
 `;
 
 export default function MenuModal({ open, onClose }: Props) {
@@ -42,24 +59,14 @@ export default function MenuModal({ open, onClose }: Props) {
     open && (
       <MenuModalWrapper>
         <GameLinkWrapper>
-          <Link to="/left-right">왼쪽과 오른쪽</Link>
-          <Link to="#">일 부터 오십</Link>
-          <Link to="#">끝말잇기</Link>
-          <Link to="#">가위바위보</Link>
-          <Link to="/left-right">왼쪽과 오른쪽</Link>
-          <Link to="#">일 부터 오십</Link>
-          <Link to="#">끝말잇기</Link>
-          <Link to="#">가위바위보</Link>
-          <Link to="/left-right">왼쪽과 오른쪽</Link>
-          <Link to="#">일 부터 오십</Link>
-          <Link to="#">끝말잇기</Link>
-          <Link to="#">가위바위보</Link>
-          <Link to="/left-right">왼쪽과 오른쪽</Link>
-          <Link to="#">일 부터 오십</Link>
-          <Link to="#">끝말잇기</Link>
-          <Link to="#">가위바위보</Link>
+          <Link to="/games/left-right">왼쪽과 오른쪽</Link>
+          <Link to="/games/1to50">일 부터 오십</Link>
+          <Link to="/games/">가위바위보</Link>
+          <Link to="/games/avoid-devil">악마 피하기</Link>
         </GameLinkWrapper>
-        <CloseBtn onClick={onClose}>닫기</CloseBtn>
+        <CloseBtn onClick={onClose}>
+          <IoCloseOutline />
+        </CloseBtn>
       </MenuModalWrapper>
     )
   );
