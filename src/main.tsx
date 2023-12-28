@@ -5,6 +5,7 @@ import App from './App.tsx';
 import AvoidDevil from './games/avoid-devil/pages/AvoidDevil.tsx';
 import SelectDifficulty from './games/avoid-devil/pages/SelectDifficulty.tsx';
 import LeftRightGame from './games/left-right/LeftRightGame.tsx';
+import OneToFiftyGame from './games/one-to-fifty/OneToFiftyGame.tsx';
 import GlobalStyles from './styles/GlobalStyles.tsx';
 
 const router = createBrowserRouter([
@@ -14,8 +15,12 @@ const router = createBrowserRouter([
     errorElement: <div>Not Found...!</div>,
   },
   {
-    path: '/left-right',
+    path: '/games/left-right',
     element: <LeftRightGame />,
+  },
+  {
+    path: '/games/1to50',
+    element: <OneToFiftyGame />,
   },
   {
     path: '/games/avoid-devil',
