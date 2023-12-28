@@ -2,8 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.tsx';
-import LeftRightGame from './pages/LeftRightGame.tsx';
 import RockPaperScissors from './pages/RockPaperScissors.tsx';
+import AvoidDevil from './games/avoid-devil/pages/AvoidDevil.tsx';
+import SelectDifficulty from './games/avoid-devil/pages/SelectDifficulty.tsx';
+import LeftRightGame from './games/left-right/LeftRightGame.tsx';
+import OneToFiftyGame from './games/one-to-fifty/OneToFiftyGame.tsx';
 import GlobalStyles from './styles/GlobalStyles.tsx';
 
 const router = createBrowserRouter([
@@ -13,12 +16,24 @@ const router = createBrowserRouter([
     errorElement: <div>Not Found...!</div>,
   },
   {
-    path: '/left-right',
+    path: '/games/left-right',
     element: <LeftRightGame />,
   },
   {
     path: '/rock-paper-scissors',
-    element: <RockPaperScissors />,
+    element: <RockPaperScissors />
+  },
+  {
+    path: '/games/1to50',
+    element: <OneToFiftyGame />,
+  },
+  {
+    path: '/games/avoid-devil',
+    element: <SelectDifficulty />,
+  },
+  {
+    path: '/games/avoid-devil/:difficulty',
+    element: <AvoidDevil />,
   },
 ]);
 
