@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.tsx';
+import RockPaperScissors from './pages/RockPaperScissors.tsx';
 import AvoidDevil from './games/avoid-devil/pages/AvoidDevil.tsx';
 import SelectDifficulty from './games/avoid-devil/pages/SelectDifficulty.tsx';
 import LeftRightGame from './games/left-right/LeftRightGame.tsx';
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: '/games/left-right',
     element: <LeftRightGame />,
+  },
+  {
+    path: '/rock-paper-scissors',
+    element: <RockPaperScissors />
   },
   {
     path: '/games/1to50',
