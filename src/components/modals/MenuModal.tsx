@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { IoCloseOutline } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
-import CloseIcon from '../../assets/icons/CloseIcon';
 
 interface Props {
   open: boolean;

@@ -9,8 +9,8 @@ export default function useTimer() {
   const currentTime = useRef(0);
 
   const updateTimerText = (time: number) => {
-    const ms = time % 1000;
-    const second = (time - ms) / 1000;
+    // const ms = time % 1000;
+    // const second = (time - ms) / 1000;
     // console.log(ms);
     setTimeText(time);
     // return `${second}.${ms}`;
